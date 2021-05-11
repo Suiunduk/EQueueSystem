@@ -1,6 +1,6 @@
 package kg.inai.equeuesystem.models;
 
-import kg.inai.equeuesystem.enums.UserRole;
+import kg.inai.equeuesystem.entities.UserRole;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -16,7 +16,7 @@ public class UserModel {
 
     Long id;
 
-    UserRole userRole;
+    Long userRoleId;
 
     String username;
 

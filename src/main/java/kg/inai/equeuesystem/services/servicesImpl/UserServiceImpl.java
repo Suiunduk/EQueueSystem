@@ -4,8 +4,11 @@ import kg.inai.equeuesystem.entities.User;
 import kg.inai.equeuesystem.exeptions.RecordNotFoundException;
 import kg.inai.equeuesystem.models.UserModel;
 import kg.inai.equeuesystem.repositories.UserRepository;
+import kg.inai.equeuesystem.repositories.UserRoleRepository;
+import kg.inai.equeuesystem.services.UserRoleService;
 import kg.inai.equeuesystem.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -16,16 +19,19 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    UserRoleRepository userRoleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public User create(UserModel userModel) {
         User user = User.builder()
                 .username(userModel.getUsername())
-                .password(/*passwordEncoder.encode(*/userModel.getPassword()/*)*/)
+                .password(passwordEncoder.encode(userModel.getPassword()))
                 .email(userModel.getEmail())
-                .userRole(userModel.getUserRole())
+                .userRole(userRoleRepository.getOne(userModel.getUserRoleId()))
                 .isActive(true)
                 .build();
         return userRepository.save(user);
@@ -46,17 +52,17 @@ public class UserServiceImpl implements UserService{
         return userRepository.findById(userModel.getId())
                 .map(newUser -> {
                     newUser.setUsername(userModel.getUsername());
-                    newUser.setPassword(/*passwordEncoder.encode(*/userModel.getPassword()/*)*/);
+                    newUser.setPassword(passwordEncoder.encode(userModel.getPassword()));
                     newUser.setEmail(userModel.getEmail());
-                    if(userModel.getUserRole() != null)
-                        newUser.setUserRole(userModel.getUserRole());
+                    newUser.setUserRole(userRoleRepository.getOne(userModel.getUserRoleId()));
                     return userRepository.save(newUser);
                 })
                 .orElseThrow(() ->
                         new RecordNotFoundException("Record not found with id:" + userModel.getId()));
     }
-//    @Override
-//    public User getUserByUsername(String username) {
-//        return userRepository.getByUsername(username);
-//    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return userRepository.getByUsername(username);
+    }
 }

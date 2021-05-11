@@ -14,9 +14,9 @@ public class MvcConfig implements WebMvcConfigurer {
 
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/notFound").setViewName("404");
-        registry.addViewController("/forbidden").setViewName("403");
-        registry.addViewController("/servererror").setViewName("500");
+        registry.addViewController("/notFound").setViewName("error-404");
+        registry.addViewController("/forbidden").setViewName("error-403");
+        registry.addViewController("/servererror").setViewName("error-500");
     }
 
     @Bean

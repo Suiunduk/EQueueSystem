@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head th:replace="header :: head">
+</head>
+<body>
+    <div class="container-scroller">
+        <nav th:replace="header :: header"> </nav>
+        <div class="container-fluid page-body-wrapper">
+            <nav th:replace="header :: sidebar"></nav>
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="row text-center">
+                        <div class="col-md-12 grid-margin">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="text-primary mt-3">
+                                        Скоро здесь будет контент!
+                                    </h2>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-12">
+                                            <img th:src="@{images/main/img1.svg}" alt="img1">
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-12">
+                                            <img th:src="@{images/main/img2.svg}" alt="img2">
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-12">
+                                            <img th:src="@{images/main/img3.svg}" alt="img2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <footer th:replace="header :: footer"></footer>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

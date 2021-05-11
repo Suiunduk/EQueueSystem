@@ -1,7 +1,7 @@
 package kg.inai.equeuesystem.configs;
 
 import kg.inai.equeuesystem.entities.User;
-import kg.inai.equeuesystem.enums.UserRole;
+import kg.inai.equeuesystem.entities.UserRole;
 import kg.inai.equeuesystem.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +21,6 @@ class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.getByUsername(username);
@@ -36,7 +35,7 @@ class UserDetailsServiceImpl implements UserDetailsService {
 
 
     private List<GrantedAuthority> mapToGrantedAuthorities(UserRole role) {
-        SimpleGrantedAuthority auth = new SimpleGrantedAuthority(role.name());
+        SimpleGrantedAuthority auth = new SimpleGrantedAuthority(role.getName());
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(auth);
         return authorities;

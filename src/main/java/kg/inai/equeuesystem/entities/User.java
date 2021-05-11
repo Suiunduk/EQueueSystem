@@ -1,6 +1,5 @@
 package kg.inai.equeuesystem.entities;
 
-import kg.inai.equeuesystem.enums.UserRole;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CollectionId;
@@ -22,8 +21,8 @@ public class User {
     @Column(name = "user_id")
     Long id;
 
-    @Enumerated(EnumType.STRING)
-    @JoinColumn(name = "user_role")
+    @ManyToOne
+    @JoinColumn(name = "user_role_id", nullable = false)
     UserRole userRole;
 
     @Column(name = "username")
