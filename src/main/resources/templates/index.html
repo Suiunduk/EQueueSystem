@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
       lang="en">
 <head th:replace="header :: head">
 </head>
@@ -20,6 +21,12 @@
                                     </h2>
                                 </div>
                                 <div class="card-body">
+                                    <div sec:authorize="!isAuthenticated()" class="row">
+                                        <div class="col-12 text-center">
+                                            <a href="/employee/registration" class="btn btn-success m-2">Регистрация в качествае специалиста</a>
+                                            <a href="/client/registration" class="btn btn-success m-2">Регистрация в качествае клиента</a>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-lg-4 col-md-4 col-sm-12">
                                             <img th:src="@{images/main/img1.svg}" alt="img1">

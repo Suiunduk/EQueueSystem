@@ -3,7 +3,10 @@ package kg.inai.equeuesystem.services.servicesImpl;
 import kg.inai.equeuesystem.entities.Employee;
 import kg.inai.equeuesystem.exeptions.RecordNotFoundException;
 import kg.inai.equeuesystem.models.EmployeeModel;
+import kg.inai.equeuesystem.repositories.CategoryRepository;
+import kg.inai.equeuesystem.repositories.DepartmentRepository;
 import kg.inai.equeuesystem.repositories.EmployeeRepository;
+import kg.inai.equeuesystem.repositories.RegionRepository;
 import kg.inai.equeuesystem.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,13 +22,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     private UserService userService;
 
     @Autowired
-    private DepartmentService departmentService;
+    private DepartmentRepository departmentRepository;
 
     @Autowired
-    private CategoryService categoryService;
+    private CategoryRepository categoryRepository;
 
     @Autowired
-    private RegionService regionService;
+    private RegionRepository regionRepository;
 
     @Override
     public Employee create(EmployeeModel employeeModel) {
@@ -41,11 +44,18 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .description(employeeModel.getDescription())
                 .isAdmin(employeeModel.getIsAdmin())
                 .isLiveQueue(employeeModel.getIsLiveQueue())
-                .department(departmentService.create(employeeModel.getDepartmentModel()))
-                .category(categoryService.create(employeeModel.getCategoryModel()))
-                .region(regionService.create(employeeModel.getRegionModel()))
                 .user(userService.create(employeeModel.getUserModel()))
                 .build();
+
+        if(employeeModel.getDepartment_id() != null)
+            employee.setDepartment(departmentRepository.getOne(employeeModel.getDepartment_id()));
+
+        if(employeeModel.getRegion_id() != null)
+            employee.setRegion(regionRepository.getOne(employeeModel.getRegion_id()));
+
+        if(employeeModel.getCategory_id() != null)
+            employee.setCategory(categoryRepository.getOne(employeeModel.getCategory_id()));
+
         return employeeRepository.save(employee);
     }
 
@@ -64,10 +74,16 @@ public class EmployeeServiceImpl implements EmployeeService {
                     newEmployee.setDescription(employeeModel.getDescription());
                     newEmployee.setIsAdmin(employeeModel.getIsAdmin());
                     newEmployee.setIsLiveQueue(employeeModel.getIsLiveQueue());
-                    newEmployee.setDepartment(departmentService.update(employeeModel.getDepartmentModel()));
-                    newEmployee.setCategory(categoryService.update(employeeModel.getCategoryModel()));
-                    newEmployee.setRegion(regionService.update(employeeModel.getRegionModel()));
-                    newEmployee.setUser(userService.update(employeeModel.getUserModel()));
+
+                    if(employeeModel.getDepartment_id() != null)
+                        newEmployee.setDepartment(departmentRepository.getOne(employeeModel.getDepartment_id()));
+
+                    if(employeeModel.getRegion_id() != null)
+                        newEmployee.setRegion(regionRepository.getOne(employeeModel.getRegion_id()));
+
+                    if(employeeModel.getCategory_id() != null)
+                        newEmployee.setCategory(categoryRepository.getOne(employeeModel.getCategory_id()));
+
                     return employeeRepository.save(newEmployee);
                 }).orElseThrow(() -> new RecordNotFoundException("Record not found with id: " + employeeModel.getId()));
     }

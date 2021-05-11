@@ -1,39 +1,41 @@
 package kg.inai.equeuesystem.controllers;
 
-import kg.inai.equeuesystem.models.UserModel;
-import kg.inai.equeuesystem.services.UserRoleService;
+import kg.inai.equeuesystem.entities.User;
 import kg.inai.equeuesystem.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class MainController {
+    private User currentUser;
 
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserRoleService userRoleService;
-
     @GetMapping("/")
     public String getMainPage(Model model) {
-
+        getCurrentUser();
+        if (currentUser != null) {
+            setUserCredentials(model);
+        }
         return "index";
     }
 
-    @GetMapping("/client/registration")
-    public String getClientRegForm(Model model) {
-        return "client_registration";
+    public void setUserCredentials(Model model){
+        getCurrentUser();
+        model.addAttribute("name", currentUser.getUsername());
     }
 
-    @PostMapping("/client/registration")
-    public String addClient(@ModelAttribute("UserModel")UserModel userModel) {
-        userModel.setUserRoleId(2L);
-        userService.create(userModel);
-        return "redirect:/login";
+    private void getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() != "anonymousUser") {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            currentUser = userService.getUserByUsername(userDetails.getUsername());
+        }
     }
 }

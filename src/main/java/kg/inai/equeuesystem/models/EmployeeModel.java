@@ -40,13 +40,18 @@ public class EmployeeModel {
 
     Boolean isLiveQueue;
 
+    Long department_id;
+
     DepartmentModel departmentModel;
+
+    Long category_id;
 
     CategoryModel categoryModel;
 
+    Long region_id;
+
     RegionModel regionModel;
 
-    Long user_id;
 
     UserModel userModel;
 }
