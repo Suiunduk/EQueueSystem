@@ -25,8 +25,8 @@
     <nav th:fragment="header" class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="navbar-brand-wrapper d-flex justify-content-center">
             <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
-                <a class="navbar-brand brand-logo" href="/"><img class="h-100" th:src="@{images/logo.png}" alt="logo" /></a>
-                <a class="navbar-brand brand-logo-mini" href="/"><img class="h-100" th:src="@{images/logo-mini.png}" alt="logo" /></a>
+                <a class="navbar-brand brand-logo" href="/"><img class="h-100" th:src="@{/images/logo.png}" alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" href="/"><img class="h-100" th:src="@{/images/logo-mini.png}" alt="logo" /></a>
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                     <span class="mdi mdi-sort-variant"></span>
                 </button>
@@ -84,6 +84,18 @@
                     <a class="nav-link" href="/">
                         <i class="mdi mdi-home menu-icon"></i>
                         <span class="menu-title">Главная</span>
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('SUPER_ADMIN')">
+                    <a class="nav-link" href="/category/list">
+                        <i class="mdi mdi-layers menu-icon"></i>
+                        <span class="menu-title">Сферы деятельности</span>
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('SUPER_ADMIN')">
+                    <a class="nav-link" href="/country/list">
+                        <i class="mdi mdi-earth menu-icon"></i>
+                        <span class="menu-title">Страны</span>
                     </a>
                 </li>
             </ul>

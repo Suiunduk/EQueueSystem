@@ -1,13 +1,8 @@
 package kg.inai.equeuesystem.bootstrap;
 
-import kg.inai.equeuesystem.entities.Client;
-import kg.inai.equeuesystem.entities.Employee;
-import kg.inai.equeuesystem.entities.User;
-import kg.inai.equeuesystem.entities.UserRole;
-import kg.inai.equeuesystem.repositories.ClientRepository;
-import kg.inai.equeuesystem.repositories.EmployeeRepository;
-import kg.inai.equeuesystem.repositories.UserRepository;
-import kg.inai.equeuesystem.repositories.UserRoleRepository;
+import kg.inai.equeuesystem.entities.*;
+import kg.inai.equeuesystem.repositories.*;
+import kg.inai.equeuesystem.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +24,9 @@ public class Bootstrap implements CommandLineRunner {
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private CountryRepository countryRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -102,6 +100,12 @@ public class Bootstrap implements CommandLineRunner {
                 .registration_date(new Date(System.currentTimeMillis()))
                 .build();
         clientRepository.save(clientUser);
+
+        //COUNTRY
+        Country kyrgyzstan = Country.builder()
+                .name("Кыргызстан")
+                .build();
+        countryRepository.save(kyrgyzstan);
 
     }
 }

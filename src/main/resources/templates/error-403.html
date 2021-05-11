@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Ошибка 403</title>
-    <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" href="images/favicon.png" />
+    <link rel="stylesheet" th:href="@{/vendors/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="shortcut icon" th:href="@{/images/favicon.png}" />
 </head>
 
 <body>
@@ -18,13 +20,13 @@
                     <div class="col-lg-4 mx-auto">
                         <div class="auth-form-light text-center py-5 px-4 px-sm-5">
                             <div class="brand-logo">
-                                <img src="images/logo.png" alt="logo">
+                                <img th:src="@{/images/logo.png}" alt="logo">
                             </div>
-                            <img src="images/403error.svg" alt="404">
+                            <img th:src="@{/images/403error.svg}" alt="403">
                             <h6 class="font-weight-light">Доступ запрещён</h6>
 
                             <div class="text-center mt-4 font-weight-light">
-                                <a href="admin/index.html" class="text-primary">Вергуться на главную</a>
+                                <a href="/" class="text-primary">Вергуться на главную</a>
                             </div>
                         </div>
                     </div>
@@ -32,10 +34,10 @@
             </div>
         </div>
     </div>
-    <script src="vendors/base/vendor.bundle.base.js"></script>
-    <script src="js/off-canvas.js"></script>
-    <script src="js/hoverable-collapse.js"></script>
-    <script src="js/template.js"></script>
+    <script th:src="@{/vendors/base/vendor.bundle.base.js}"></script>
+    <script th:src="@{/js/off-canvas.js}"></script>
+    <script th:src="@{/js/hoverable-collapse.js}"></script>
+    <script th:src="@{/js/template.js}"></script>
 </body>
 
 </html>
